@@ -20,3 +20,22 @@ class HomeErrorState extends HomeState{}
 class HomeNavigateToWishlistPageActionState extends HomeActionState{}
 
 class HomeNavigateToCartPageActionState extends HomeActionState{}
+
+class HomeProductWishlistActionState extends HomeActionState{
+  final String item;
+  String msg="No Message yet";
+
+  HomeProductWishlistActionState({required this.item}){
+    msg = "$item is added to wishlist";
+  }
+}
+
+class HomeProductCartActionState extends HomeActionState{
+
+  final String item;
+  String msg = "No Message Yet";
+
+  HomeProductCartActionState({required this.item}){
+    msg = "$item is added in cart";
+  }
+}

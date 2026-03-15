@@ -37,6 +37,10 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.push(context, MaterialPageRoute(builder: (context)=>cartScreen()));
         }else if(state is HomeNavigateToWishlistPageActionState){
           Navigator.push(context, MaterialPageRoute(builder: (context)=>WishlistScreen()));
+        }else if(state is HomeProductWishlistActionState){
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.msg)));
+        }else if(state is HomeProductCartActionState){
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.msg)));
         }
       },
       builder: (context, state) {
@@ -71,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
               body: ListView.builder(
                 itemCount: homeLoadedSuccessState.products.length,
                 itemBuilder: (context,index){
-                  return ProductTileWidget(productDataModel: homeLoadedSuccessState.products[index]);
+                  return ProductTileWidget(productDataModel: homeLoadedSuccessState.products[index],homeBloc: homeBloc,);
                 }
               )
             );

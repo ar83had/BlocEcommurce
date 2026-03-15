@@ -2,7 +2,9 @@ import 'dart:async';
 // import 'dart:nativewrappers/_internal/vm/lib/convert_patch.dart';
 
 import 'package:bloc/bloc.dart';
+import 'package:counter/data/card_item.dart';
 import 'package:counter/data/grocery_data.dart';
+import 'package:counter/data/wish_list.dart';
 import 'package:counter/features/home/model/home_product.dart';
 import 'package:meta/meta.dart';
 
@@ -14,6 +16,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeCartButtonNavigateEvent>(homeCartButtonNavigateEvent);
     on<HomeWishlistButtonNavigateEvent>(homeWishlistButtonNavigateEvent);
     on<HomeInitialEvent>(homeInitialEvent);
+    on<HomeProductCartButtonClickedEvent>(homeProductCartButtonClickedEvent);
+    on<HomeProductWishlistButtonClickedEvent>(homeProductWishlistButtonClickedEvent);
   }
   
   FutureOr<void> homeInitialEvent(HomeInitialEvent event, Emitter<HomeState> emit) async{
@@ -32,4 +36,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeNavigateToWishlistPageActionState());
   }
 
+
+  FutureOr<void> homeProductCartButtonClickedEvent(HomeProductCartButtonClickedEvent event, Emitter<HomeState> emit) {
+    print("Home Product Cart taped..");
+    List<ProductDataModel> cartList = cardItems;
+    // final homeProductCartButtonClickedEvent = event as HomeProductCartButtonClickedEvent;
+    ProductDataModel item = event.item;
+    cartList.add(item);
+    print("New cart List : $cartList");
+    emit(HomeProductCartActionState(item: item.name));
+  }
+
+  FutureOr<void> homeProductWishlistButtonClickedEvent(HomeProductWishlistButtonClickedEvent event, Emitter<HomeState> emit) {
+    print("Home Product Wish List Taped");
+    List<ProductDataModel> wishList = wishlistitems;
+    ProductDataModel item = event.item;
+
+    wishList.add(item);
+    print("New Item is added to wishlist list : $wishList");
+    emit(HomeProductWishlistActionState(item: item.name));
+  }
 }
